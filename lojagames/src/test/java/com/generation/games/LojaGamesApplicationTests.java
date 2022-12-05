@@ -1,13 +1,13 @@
-package com.generation.lojagames;
+package com.generation.games;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BlogpessoalApplicationTests {
+class LojaGamesApplicationTests {
 
-    @Test
-    void contextLoads() {
-    }
+	@Test
+	void contextLoads() {
+	}
 
 }
