@@ -1,4 +1,5 @@
 package com.generation.blogpessoal.controller;
+import com.generation.blogpessoal.repository.UsuarioRepository;
 import com.generation.blogpessoal.model.Usuario;
 import com.generation.blogpessoal.model.UsuarioLogin;
 import com.generation.blogpessoal.service.UsuarioService;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -16,7 +18,20 @@ import java.util.Optional;
 public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
+    @GetMapping("/listartodos")
+    public ResponseEntity<List<Usuario>> listarTodos(){
+        return ResponseEntity.ok(usuarioRepository.findAll());
+    }
+
+    @GetMapping("buscarporid/{id}")
+    public ResponseEntity<Usuario> buscarPorId(@PathVariable Long id) {
+        return usuarioRepository.findById(id)
+                .map(resposta -> ResponseEntity.ok(resposta))
+                .orElse(ResponseEntity.notFound().build());
+    }
     @PostMapping("/cadastrar")
     public ResponseEntity<Usuario> postUsuario(@Valid @RequestBody Usuario usuario){
         return usuarioService.cadastrarUsuario(usuario)
