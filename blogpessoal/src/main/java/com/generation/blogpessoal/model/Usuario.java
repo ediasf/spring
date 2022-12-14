@@ -1,13 +1,20 @@
 package com.generation.blogpessoal.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "tb_usuarios")
@@ -34,6 +41,18 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties("usuario")
     private List<Postagem> postagem;
+
+    public Usuario(Long id, String nome, String usuario, String senha, String foto) {
+        this.id = id;
+        this.nome = nome;
+        this.usuario = usuario;
+        this.senha = senha;
+        this.foto = foto;
+    }
+
+    public Usuario() {
+
+    }
 
     /* Insira os Getters and Setters */
 

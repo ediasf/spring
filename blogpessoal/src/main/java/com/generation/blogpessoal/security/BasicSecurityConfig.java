@@ -1,4 +1,5 @@
 package com.generation.blogpessoal.security;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -22,7 +23,7 @@ public class BasicSecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
-            throws Exception {
+        throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
@@ -34,17 +35,13 @@ public class BasicSecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().csrf().disable()
                 .cors();
-
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/usuarios/logar").permitAll()
-                        .requestMatchers("/usuarios/cadastrar").permitAll()
-                        .requestMatchers(HttpMethod.OPTIONS).permitAll()
+                        .antMatchers("/usuario/logar").permitAll()
+                        .antMatchers("/usuario/cadastrar").permitAll()
+                        .antMatchers(HttpMethod.OPTIONS).permitAll()
                         .anyRequest().authenticated())
                 .httpBasic();
-
         return http.build();
-
     }
-
 }

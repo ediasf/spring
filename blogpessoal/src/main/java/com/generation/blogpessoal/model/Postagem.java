@@ -1,36 +1,54 @@
 package com.generation.blogpessoal.model;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "tb_postagens")
 public class Postagem {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "O título é obrigatório e não pode ser vazio!")
-    @Size(min = 10, max = 60, message = "O título deve conter entre 10 e 60 caracteres")
+
+    @NotBlank(message = "O Atributo titulo e obrigatorio e nao pode ser vazio")
+    @Size(min = 5, max = 100, message = "O Atributo titulo deve conter no minimo 5 e no maximo 100 caracteries")
     private String titulo;
-    @NotNull(message = "O texto é obrigatório!")
-    @Size(min = 100, max = 606, message = "O texto deve conter entre 100 e 606 caracteres")
+
+    @NotNull(message = "O Atributo texto e obrigatorio")
+    @Size(min = 10, max = 1000, message = "O Atributo texto deve conter no minimo 10 e no maximo 1000 caracteries")
     private String texto;
+
     @UpdateTimestamp
     private LocalDateTime data;
 
     @ManyToOne
-    @JsonIgnoreProperties("postagem")
-    public Tema tema;
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
     @ManyToOne
-    @JsonIgnoreProperties("postagem")
-    public Usuario usuario;
+    @JoinColumn(name = "tema_id")
+    private Tema tema;
+
+    public Tema getTema() {
+        return tema;
+    }
+
+    public void setTema(Tema tema) {
+        this.tema = tema;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
     public Long getId() {
         return id;
@@ -62,21 +80,5 @@ public class Postagem {
 
     public void setData(LocalDateTime data) {
         this.data = data;
-    }
-
-    public Tema getTema() {
-        return tema;
-    }
-
-    public void setTema(Tema tema) {
-        this.tema = tema;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 }
